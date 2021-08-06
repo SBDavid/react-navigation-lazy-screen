@@ -1,6 +1,6 @@
 {
   "name": "react-navigation-lazy-screen",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "实现页面懒加载，并补发首次focus事件",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

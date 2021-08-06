@@ -5,16 +5,18 @@ import type {
   RouteProp,
 } from '@react-navigation/native';
 
+// type factory<T> = T extends LazyScreenProps;
+
 type Props = {
   navigation: NavigationProp<ParamListBase>;
   route: RouteProp<ParamListBase, keyof ParamListBase>;
   fallback: NonNullable<React.ReactNode> | null;
   factory: () => Promise<{
     default: React.ComponentType<
-      { navigation: any; route: any } & LazyScreenProps
+      { navigation: any; route: any } & LazyScreenProps & any
     >;
   }>;
-};
+} & any;
 
 export type LazyScreenProps = {
   addFocusListener: (callback: () => void) => () => void;
@@ -31,7 +33,7 @@ export default class LazyScreen extends React.PureComponent<Props> {
   // 发送第一次focus事件
   hasEmitFirstDocus = false;
   comp: React.LazyExoticComponent<
-    React.ComponentType<{ navigation: any; route: any } & LazyScreenProps>
+    React.ComponentType<{ navigation: any; route: any } & LazyScreenProps & any>
   >;
 
   constructor(p: Props) {
@@ -54,7 +56,7 @@ export default class LazyScreen extends React.PureComponent<Props> {
     }
 
     return () => {
-      const index = this.blurCallbacks.indexOf(callback);
+      const index = this.focusCallbacks.indexOf(callback);
       if (index > -1) {
         this.focusCallbacks.splice(index, 1);
       }
