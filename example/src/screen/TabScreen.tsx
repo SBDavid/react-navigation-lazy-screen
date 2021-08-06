@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { SafeAreaView, Text, Button } from 'react-native';
 
 import type { StackScreenProps } from '@react-navigation/stack';
 import type { RootStackParamList } from '../router/type';
@@ -38,6 +38,13 @@ export default class TabScreen extends React.Component<Props> {
         style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}
       >
         <Text>{'The ' + this.props.pageName + ' page'}</Text>
+        <Button
+          title="Go to Stack screen B"
+          onPress={() => {
+            this.props.navigation.navigate('StackScreenB');
+            console.info('open StackScreenB');
+          }}
+        />
       </SafeAreaView>
     );
   }
