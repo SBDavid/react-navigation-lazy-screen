@@ -4,10 +4,10 @@ import { StyleSheet, View, Text } from 'react-native';
 import ReactNavigationLazyScreen from 'react-navigation-lazy-screen';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [result] = React.useState<number | undefined>();
 
   React.useEffect(() => {
-    ReactNavigationLazyScreen.multiply(3, 7).then(setResult);
+    console.info(ReactNavigationLazyScreen);
   }, []);
 
   return (

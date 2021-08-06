@@ -47,6 +47,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
+    "@react-navigation/native": "5.7.3",
     "@commitlint/config-conventional": "^11.0.0",
     "@react-native-community/eslint-config": "^2.0.0",
     "@release-it/conventional-changelog": "^2.0.0",
@@ -69,7 +70,10 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "@react-navigation/native": "5.7.3",
+    "@react-navigation/stack": "5.9.0",
+    "@react-navigation/bottom-tabs": "5.11.11"
   },
   "jest": {
     "preset": "react-native",
