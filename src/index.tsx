@@ -19,6 +19,7 @@ type Props = {
 export type LazyScreenProps = {
   addFocusListener: (callback: () => void) => () => void;
   addBlurListener: (callback: () => void) => () => void;
+  addListener: (type: 'focus' | 'blur', callback: () => void) => () => void;
 };
 
 export const AddListenerContext = React.createContext({
