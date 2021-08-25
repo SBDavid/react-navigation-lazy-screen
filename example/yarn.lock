@@ -3566,7 +3566,7 @@ promise@^8.0.3:
   dependencies:
     asap "~2.0.6"
 
-prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -3682,7 +3682,9 @@ react-native@0.63.4:
     whatwg-fetch "^3.0.0"
 
 "react-navigation-lazy-screen@file:..":
-  version "0.1.1"
+  version "1.0.0"
+  dependencies:
+    prop-types "15.7.2"
 
 react-refresh@^0.4.0:
   version "0.4.3"

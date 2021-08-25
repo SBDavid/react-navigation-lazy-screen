@@ -92,6 +92,34 @@ export default class StackScreen extends React.Component<Props> {
 
 ```
 
+### 3. 在组件中监听路由事件
+> 您可以通过react context机制在页面的任何子组件中监听 focus blur 事件
+
+```js
+import { AddListenerContext } from 'react-navigation-lazy-screen';
+
+class InnerComp extends React.PureComponent<{ pageName: string }> {
+  unsubscribeFocus: any;
+
+  static contextType = AddListenerContext;
+
+  componentDidMount() {
+    this.unsubscribeFocus = this.context.addListener('focus', () => {
+      console.info(this.props.pageName + ' InnerComp focus');
+    });
+
+    // same for blur
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeFocus();
+  }
+
+  render() {
+    return <Text>{'The ' + this.props.pageName + ' InnerComp'}</Text>;
+  }
+}
+```
 ## Example
 
 请参考 example 文件夹

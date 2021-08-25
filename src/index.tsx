@@ -5,8 +5,6 @@ import type {
   RouteProp,
 } from '@react-navigation/native';
 
-// type factory<T> = T extends LazyScreenProps;
-
 type Props = {
   navigation: NavigationProp<ParamListBase>;
   route: RouteProp<ParamListBase, keyof ParamListBase>;
@@ -22,6 +20,21 @@ export type LazyScreenProps = {
   addFocusListener: (callback: () => void) => () => void;
   addBlurListener: (callback: () => void) => () => void;
 };
+
+export const AddListenerContext = React.createContext({
+  addFocusListener: (callback: () => void) => {
+    callback();
+    throw Error('this func should not be called');
+  },
+  addBlurListener: (callback: () => void) => {
+    callback();
+    throw Error('this func should not be called');
+  },
+  addListener: (type: 'focus' | 'blur', callback: () => void) => {
+    callback();
+    throw Error('this func should not be called ' + type);
+  },
+});
 
 export default class LazyScreen extends React.PureComponent<Props> {
   // 取消订阅
@@ -42,12 +55,22 @@ export default class LazyScreen extends React.PureComponent<Props> {
     this.onBlur = this.onBlur.bind(this);
     this.addFocusListener = this.addFocusListener.bind(this);
     this.addBlurListener = this.addBlurListener.bind(this);
+    this.addListener = this.addListener.bind(this);
 
     this.comp = React.lazy(this.props.factory);
   }
 
+  addListener(type: 'focus' | 'blur', callback: () => void): () => void {
+    if (type === 'focus') {
+      return this.addFocusListener(callback);
+    }
+
+    return this.addBlurListener(callback);
+  }
+
   addFocusListener(callback: () => void): () => void {
     this.focusCallbacks.push(callback);
+    // 补发首次事件
     if (!this.hasEmitFirstDocus) {
       this.hasEmitFirstDocus = true;
       setTimeout(() => {
@@ -74,6 +97,7 @@ export default class LazyScreen extends React.PureComponent<Props> {
   }
 
   onFocus() {
+    this.hasEmitFirstDocus = true;
     this.focusCallbacks.forEach((cb) => cb());
   }
 
@@ -101,13 +125,24 @@ export default class LazyScreen extends React.PureComponent<Props> {
 
   render() {
     return (
-      <React.Suspense fallback={this.props.fallback}>
-        <this.comp
-          {...this.props}
-          addFocusListener={this.addFocusListener}
-          addBlurListener={this.addBlurListener}
-        />
-      </React.Suspense>
+      <AddListenerContext.Provider
+        value={{
+          // @ts-ignore
+          addFocusListener: this.addFocusListener,
+          // @ts-ignore
+          addBlurListener: this.addBlurListener,
+          // @ts-ignore
+          addListener: this.addListener,
+        }}
+      >
+        <React.Suspense fallback={this.props.fallback}>
+          <this.comp
+            {...this.props}
+            addFocusListener={this.addFocusListener}
+            addBlurListener={this.addBlurListener}
+          />
+        </React.Suspense>
+      </AddListenerContext.Provider>
     );
   }
 }

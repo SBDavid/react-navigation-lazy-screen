@@ -46,6 +46,7 @@ const Router = () => (
   <NavigationContainer>
     {/* Screen configuration */}
     <RootStack.Navigator>
+      <RootStack.Screen name="TabS" component={Tabs} />
       <RootStack.Screen name="StackScreen">
         {(props) => {
           return (
@@ -70,7 +71,6 @@ const Router = () => (
           );
         }}
       </RootStack.Screen>
-      <RootStack.Screen name="TabS" component={Tabs} />
     </RootStack.Navigator>
   </NavigationContainer>
 );
