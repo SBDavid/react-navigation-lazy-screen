@@ -98,7 +98,6 @@ export default class LazyScreen extends React.PureComponent<Props> {
   }
 
   onFocus() {
-    this.hasEmitFirstDocus = true;
     this.focusCallbacks.forEach((cb) => cb());
   }
 
@@ -141,6 +140,7 @@ export default class LazyScreen extends React.PureComponent<Props> {
             {...this.props}
             addFocusListener={this.addFocusListener}
             addBlurListener={this.addBlurListener}
+            addListener={this.addListener}
           />
         </React.Suspense>
       </AddListenerContext.Provider>
